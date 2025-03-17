@@ -3,36 +3,38 @@ Chinese Wall Model Implementation
 This module contains the core logic for the Chinese Wall security model.
 """
 
+from typing import Dict, List, Tuple, Any, Set, Optional
+
 class ChineseWallModel:
     def __init__(self):
         # Dictionary to store conflict of interest classes
         # Format: {coi_class_id: {company_id: {object_id: object_data}}}
-        self.coi_classes = {}
+        self.coi_classes: Dict[str, Dict[str, Dict[str, str]]] = {}
         
         # Dictionary to track user access history
         # Format: {user_id: {company_id: True}}
-        self.user_access_history = {}
+        self.user_access_history: Dict[str, Dict[str, bool]] = {}
         
         # Dictionary to store access logs
         # Format: [{timestamp, user_id, company_id, object_id, access_granted}]
-        self.access_logs = []
+        self.access_logs: List[Dict[str, Any]] = []
         
         # Dictionary to store company information
         # Format: {company_id: {"name": name, "coi_class": coi_class_id}}
-        self.companies = {}
+        self.companies: Dict[str, Dict[str, str]] = {}
         
         # Dictionary to store user information
         # Format: {user_id: {"name": name, "role": role}}
-        self.users = {}
+        self.users: Dict[str, Dict[str, str]] = {}
     
-    def add_coi_class(self, coi_class_id, name):
+    def add_coi_class(self, coi_class_id: str, name: str) -> bool:
         """Add a new conflict of interest class"""
         if coi_class_id not in self.coi_classes:
             self.coi_classes[coi_class_id] = {}
             return True
         return False
     
-    def add_company(self, company_id, name, coi_class_id):
+    def add_company(self, company_id: str, name: str, coi_class_id: str) -> bool:
         """Add a new company to a conflict of interest class"""
         if coi_class_id not in self.coi_classes:
             return False
@@ -43,7 +45,7 @@ class ChineseWallModel:
             return True
         return False
     
-    def add_object(self, company_id, object_id, object_data):
+    def add_object(self, company_id: str, object_id: str, object_data: str) -> bool:
         """Add a new object to a company dataset"""
         for coi_class_id, companies in self.coi_classes.items():
             if company_id in companies:
@@ -51,7 +53,7 @@ class ChineseWallModel:
                 return True
         return False
     
-    def add_user(self, user_id, name, role="standard"):
+    def add_user(self, user_id: str, name: str, role: str = "standard") -> bool:
         """Add a new user to the system"""
         if user_id not in self.users:
             self.users[user_id] = {"name": name, "role": role}
@@ -59,7 +61,7 @@ class ChineseWallModel:
             return True
         return False
     
-    def can_access(self, user_id, company_id, object_id=None):
+    def can_access(self, user_id: str, company_id: str, object_id: Optional[str] = None) -> Tuple[bool, str]:
         """
         Check if a user can access a company's data based on Chinese Wall rules
         Returns: (bool, str) - (access_granted, reason)
@@ -89,7 +91,7 @@ class ChineseWallModel:
         # No conflicts found, access is allowed
         return True, "Access granted - no conflicts"
     
-    def access_object(self, user_id, company_id, object_id, timestamp):
+    def access_object(self, user_id: str, company_id: str, object_id: str, timestamp: str) -> Tuple[bool, str]:
         """
         Attempt to access an object and record the access
         Returns: (bool, str) - (access_granted, reason)
@@ -117,14 +119,14 @@ class ChineseWallModel:
         
         return access_granted, reason
     
-    def get_company_objects(self, company_id):
+    def get_company_objects(self, company_id: str) -> Dict[str, str]:
         """Get all objects for a specific company"""
         for coi_class_id, companies in self.coi_classes.items():
             if company_id in companies:
                 return companies[company_id]
         return {}
     
-    def get_user_accessible_companies(self, user_id):
+    def get_user_accessible_companies(self, user_id: str) -> List[str]:
         """Get all companies a user can access based on their history"""
         accessible_companies = []
         
@@ -133,7 +135,7 @@ class ChineseWallModel:
             return list(self.companies.keys())
         
         # Get the COI classes the user has already accessed
-        accessed_coi_classes = set()
+        accessed_coi_classes: Set[str] = set()
         for company_id in self.user_access_history[user_id]:
             accessed_coi_classes.add(self.companies[company_id]["coi_class"])
             # User can always access companies they've already accessed
@@ -146,18 +148,18 @@ class ChineseWallModel:
         
         return accessible_companies
     
-    def generate_report(self):
+    def generate_report(self) -> List[Dict[str, Any]]:
         """Generate a report of all access logs"""
         return self.access_logs
     
-    def reset_user_history(self, user_id):
+    def reset_user_history(self, user_id: str) -> bool:
         """Reset a user's access history"""
         if user_id in self.user_access_history:
             self.user_access_history[user_id] = {}
             return True
         return False
     
-    def get_coi_structure(self):
+    def get_coi_structure(self) -> List[Dict[str, Any]]:
         """Get the structure of COI classes and companies for visualization"""
         structure = []
         for coi_class_id in self.coi_classes:

@@ -4,13 +4,14 @@ Handles initialization and management of sample data for the application
 """
 
 from datetime import datetime
+from typing import Dict, List, Tuple, Any, Optional
 
 class DataManager:
     def __init__(self, model):
         """Initialize with a reference to the ChineseWallModel instance"""
         self.model = model
     
-    def initialize_sample_data(self):
+    def initialize_sample_data(self) -> None:
         """Initialize the model with sample data for demonstration"""
         # Create Conflict of Interest Classes
         self.model.add_coi_class("banking", "Banking")
@@ -79,43 +80,43 @@ class DataManager:
         self.model.add_user("user4", "Emmanuel Mwale", "auditor")
         self.model.add_user("admin", "Tiness Kamwale", "administrator")
     
-    def add_new_company(self, company_id, name, coi_class_id):
+    def add_new_company(self, company_id: str, name: str, coi_class_id: str) -> bool:
         """Add a new company to the system"""
         return self.model.add_company(company_id, name, coi_class_id)
     
-    def add_new_object(self, company_id, object_id, object_data):
+    def add_new_object(self, company_id: str, object_id: str, object_data: str) -> bool:
         """Add a new data object to a company"""
         return self.model.add_object(company_id, object_id, object_data)
     
-    def add_new_user(self, user_id, name, role="standard"):
+    def add_new_user(self, user_id: str, name: str, role: str = "standard") -> bool:
         """Add a new user to the system"""
         return self.model.add_user(user_id, name, role)
     
-    def add_new_coi_class(self, coi_class_id, name):
+    def add_new_coi_class(self, coi_class_id: str, name: str) -> bool:
         """Add a new conflict of interest class"""
         return self.model.add_coi_class(coi_class_id, name)
     
-    def get_all_coi_classes(self):
+    def get_all_coi_classes(self) -> List[str]:
         """Get all conflict of interest classes"""
-        return self.model.coi_classes.keys()
+        return list(self.model.coi_classes.keys())
     
-    def get_all_companies(self):
+    def get_all_companies(self) -> Dict[str, Dict[str, str]]:
         """Get all companies in the system"""
         return self.model.companies
     
-    def get_all_users(self):
+    def get_all_users(self) -> Dict[str, Dict[str, str]]:
         """Get all users in the system"""
         return self.model.users
     
-    def get_company_objects(self, company_id):
+    def get_company_objects(self, company_id: str) -> Dict[str, str]:
         """Get all objects for a specific company"""
         return self.model.get_company_objects(company_id)
     
-    def simulate_access_attempt(self, user_id, company_id, object_id):
+    def simulate_access_attempt(self, user_id: str, company_id: str, object_id: str) -> Tuple[bool, str]:
         """Simulate a user attempting to access a company's data"""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return self.model.access_object(user_id, company_id, object_id, timestamp)
     
-    def reset_user_history(self, user_id):
+    def reset_user_history(self, user_id: str) -> bool:
         """Reset a user's access history"""
         return self.model.reset_user_history(user_id)
