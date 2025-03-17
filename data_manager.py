@@ -20,7 +20,7 @@ class DataManager:
         # Add companies to Banking COI class
         self.model.add_company("bank1", "Global Bank", "banking")
         self.model.add_company("bank2", "National Finance", "banking")
-        self.model.add_company("bank3", "City Credit Union", "banking")
+        self.model.add_company("bank3", "Bank Of Zambia", "banking")
         
         # Add companies to Oil COI class
         self.model.add_company("oil1", "Petrol Giant", "oil")
@@ -73,11 +73,11 @@ class DataManager:
         self.model.add_object("tech3", "user_data_policy", "Internal policy on user data handling")
         
         # Add users
-        self.model.add_user("user1", "Alice Johnson", "consultant")
-        self.model.add_user("user2", "Bob Smith", "analyst")
-        self.model.add_user("user3", "Carol Davis", "manager")
-        self.model.add_user("user4", "David Wilson", "auditor")
-        self.model.add_user("admin", "Admin User", "administrator")
+        self.model.add_user("user1", "Nkusechela Siame", "consultant")
+        self.model.add_user("user2", "Mweetwa Nketani", "analyst")
+        self.model.add_user("user3", "Tshaka Zulu", "manager")
+        self.model.add_user("user4", "Emmanuel Mwale", "auditor")
+        self.model.add_user("admin", "Tiness Kamwale", "administrator")
     
     def add_new_company(self, company_id, name, coi_class_id):
         """Add a new company to the system"""
