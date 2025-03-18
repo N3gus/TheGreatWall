@@ -20,7 +20,7 @@ Key concepts:
 - Ability to add/modify datasets and users
 
 ## Usage
-1. Run the application: `python chinese_wall_app.py`
+1. Run the application: `python gui_app.py`
 2. Log in with one of the provided test users
 3. Attempt to access different datasets to see the Chinese Wall Model in action
 4. Generate reports to review access patterns and violations
