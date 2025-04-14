@@ -1,7 +1,7 @@
 """
 Main GUI Application for Chinese Wall Model Demonstration
 """
-
+# Mweetwa Mweembo Nketani | 20158077
 import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib
@@ -169,10 +169,10 @@ class ChineseWallApp:
             if self.current_frame:
                 self.current_frame.destroy()
             
-            self.current_frame = HelpScreen(
-                self.root,
-                self
-            )
+            # Create and pack the help screen
+            self.current_frame = HelpScreen(self.root, self)
+            self.current_frame.pack(fill=tk.BOTH, expand=True)
+            
         except Exception as e:
             self.handle_exception("Help Screen Error", e)
     

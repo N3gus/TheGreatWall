@@ -7,22 +7,26 @@ from tkinter import ttk
 import random
 
 def create_tooltip(widget, text):
-    """Create a tooltip for a widget"""
+    """Create a modern tooltip for a widget"""
     def enter(event):
         x, y, _, _ = widget.bbox("insert")
         x += widget.winfo_rootx() + 25
         y += widget.winfo_rooty() + 25
         
-        # Create a toplevel window
+        # Create a toplevel window with modern styling
         tooltip = tk.Toplevel(widget)
         tooltip.wm_overrideredirect(True)
         tooltip.wm_geometry(f"+{x}+{y}")
         
         # Create label in the toplevel
         label = ttk.Label(tooltip, text=text, justify=tk.LEFT,
-                         background="#ffffe0", relief=tk.SOLID, borderwidth=1,
-                         font=("Arial", "10", "normal"))
+                         background="#ffffff", relief=tk.SOLID, borderwidth=1,
+                         font=("Arial", "10", "normal"),
+                         padding=(10, 5))
         label.pack(ipadx=5, ipady=5)
+        
+        # Add shadow effect
+        tooltip.configure(bg="#f0f0f0")
         
         # Store the tooltip reference
         widget.tooltip = tooltip
@@ -79,11 +83,11 @@ def create_styled_button(parent, text, command, **kwargs):
     return button
 
 def create_section_header(parent, text):
-    """Create a section header"""
-    frame = ttk.Frame(parent)
+    """Create a modern section header with improved styling"""
+    frame = ttk.Frame(parent, style='Header.TFrame')
     frame.pack(fill=tk.X, padx=5, pady=5)
     
-    label = ttk.Label(frame, text=text, font=('Arial', 12, 'bold'))
+    label = ttk.Label(frame, text=text, style='Header.TLabel')
     label.pack(anchor=tk.W)
     
     separator = ttk.Separator(frame, orient=tk.HORIZONTAL)
@@ -92,12 +96,17 @@ def create_section_header(parent, text):
     return frame
 
 def create_info_box(parent, title, content):
-    """Create an information box"""
-    frame = ttk.LabelFrame(parent, text=title)
+    """Create an enhanced information box with better visual hierarchy"""
+    frame = ttk.LabelFrame(parent, text=title, style='Card.TFrame')
     frame.pack(fill=tk.X, padx=10, pady=5, ipady=5)
     
-    label = ttk.Label(frame, text=content, wraplength=400, justify=tk.LEFT)
-    label.pack(padx=10, pady=5)
+    # Use text widget with better styling
+    text = tk.Text(frame, wrap=tk.WORD, height=5, bg='#ffffff',
+                  relief=tk.FLAT, borderwidth=0,
+                  font=('Arial', 10))
+    text.insert(tk.END, content)
+    text.configure(state=tk.DISABLED)
+    text.pack(padx=10, pady=5)
     
     return frame
 

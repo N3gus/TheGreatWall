@@ -13,6 +13,8 @@ class HelpScreen(ttk.Frame):
         self.parent = parent
         self.controller = controller
         
+        # Fill the entire parent window
+        self.pack(fill=tk.BOTH, expand=True)
         self.create_widgets()
     
     def create_widgets(self):
@@ -30,7 +32,7 @@ class HelpScreen(ttk.Frame):
         
         # Back button
         back_button = ttk.Button(header_frame, text="Back to Dashboard", 
-                                command=lambda: self.controller.show_frame("MainDashboard"))
+                                command=self.controller.show_main_dashboard)
         back_button.pack(side=tk.RIGHT)
         
         # Create a notebook for different help sections
@@ -344,7 +346,7 @@ By following this tutorial, you'll gain hands-on experience with the Chinese Wal
 ## Technical Questions
 
 ### Q: What technologies are used to build this application?
-**A:** This application is built using Python with the Tkinter library for the graphical user interface. It also uses matplotlib for visualizations in the reports section.
+**A:** This application is built using Python and Tkinter, with a focus on creating a clear, intuitive interface that highlights the key concepts of the Chinese Wall Model.
 
 ### Q: Is my data saved between sessions?
 **A:** In this educational version, data is initialized with sample values each time the application starts and is not persisted between sessions. A production version would include database integration.
@@ -431,7 +433,7 @@ This is an educational project and feedback is welcome. If you have suggestions 
 
 This application is provided for educational purposes. All code and content are available for educational use and modification with appropriate attribution.
 
-© 2023 The Great Wall Development Team
+ 2023 The Great Wall Development Team
 """
         content.insert(tk.END, about_text)
         content.config(state=tk.DISABLED)
